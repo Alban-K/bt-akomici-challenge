@@ -1,28 +1,15 @@
-package com.komici.challenge.model;
+package com.komici.challenge.rest.model;
 
 
-
-
-
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
 public class MobileResource implements Serializable {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
-
-  @Column(name = "name")
   private String name;
-
-  @Column(name = "description")
   private String description;
 
-  @Column(name = "booked")
   private boolean booked;
 
   public MobileResource() {
