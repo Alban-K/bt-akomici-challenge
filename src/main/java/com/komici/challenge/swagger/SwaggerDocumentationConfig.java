@@ -1,4 +1,4 @@
-package com.komici.challenge.config.swagger;
+package com.komici.challenge.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

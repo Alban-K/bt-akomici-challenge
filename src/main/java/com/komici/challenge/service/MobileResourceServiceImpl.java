@@ -1,5 +1,6 @@
 package com.komici.challenge.service;
 
+import com.komici.challenge.exception.BTNoEntityFoundException;
 import com.komici.challenge.persistence.MobileResourceEntity;
 import com.komici.challenge.persistence.ResourceRepository;
 import com.komici.challenge.rest.model.MobileResource;
@@ -24,7 +25,7 @@ public class MobileResourceServiceImpl implements MobileResourceService
         Optional<MobileResourceEntity> resourceEntityOpt = resourceRepository.findById(id);
 
         if (!resourceEntityOpt.isPresent()) {
-            throw new EntityNotFoundException();
+            throw new BTNoEntityFoundException(id);
         }
 
         return convertToModel(resourceEntityOpt.get());
