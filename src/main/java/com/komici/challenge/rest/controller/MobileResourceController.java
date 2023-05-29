@@ -77,7 +77,7 @@ public class MobileResourceController implements MobileResourceApi {
         mobileResourceService.deleteMobileResource(resourceId);
     }
 
-    @PostMapping(value = "/resource/book/{resourceId}/user/{userId}")
+    @PutMapping(value = "/resource/book/{resourceId}/user/{userId}")
     public MobileResourceModel bookResource(@PathVariable Long resourceId, @PathVariable Long userId) {
 
         log.info("bookResource with resourceId={}, for userId={}", resourceId, userId);
@@ -86,7 +86,7 @@ public class MobileResourceController implements MobileResourceApi {
     }
 
     @Override
-    @PostMapping(value = "/resource/checkout/{resourceId}")
+    @PutMapping(value = "/resource/checkout/{resourceId}")
     public MobileResourceModel checkoutResource(@PathVariable Long resourceId) {
 
         log.info("checkoutResource with id={}", resourceId);

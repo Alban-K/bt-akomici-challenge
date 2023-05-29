@@ -8,7 +8,6 @@ import com.komici.challenge.persistence.user.UserEntity;
 import com.komici.challenge.persistence.user.UserRepository;
 import com.komici.challenge.rest.model.resource.*;
 import com.komici.challenge.rest.model.user.LiteUser;
-import com.komici.challenge.rest.model.user.UserModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
