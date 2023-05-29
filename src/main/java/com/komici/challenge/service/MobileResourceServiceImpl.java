@@ -6,7 +6,6 @@ import com.komici.challenge.persistence.ResourceRepository;
 import com.komici.challenge.rest.model.MobileResource;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service(value = "mobileResourceService")
