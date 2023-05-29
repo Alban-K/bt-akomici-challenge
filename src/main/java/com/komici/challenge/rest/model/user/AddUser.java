@@ -4,7 +4,7 @@ package com.komici.challenge.rest.model.user;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -12,22 +12,22 @@ public class AddUser implements Serializable {
 
 
   @ApiModelProperty(value = "The username", required = true)
-  @NotNull
+  @NotBlank
   @Size(max = 20)
   private String username;
 
   @ApiModelProperty(value = "Surname of the user", required = true)
-  @NotNull
+  @NotBlank
   @Size(max = 70)
   private String surname;
 
   @ApiModelProperty(value = "Name of the user", required = true)
-  @NotNull
+  @NotBlank
   @Size(max = 70)
   private String firstname;
 
   @ApiModelProperty(value = "Email of the user", required = true)
-  @NotNull
+  @NotBlank
   @Size(max = 70)
   @Email
   private String email;
