@@ -1,9 +1,9 @@
-package com.komici.challenge.service;
+package com.komici.challenge.service.resource;
 
 import com.komici.challenge.exception.BTNoEntityFoundException;
-import com.komici.challenge.persistence.MobileResourceEntity;
-import com.komici.challenge.persistence.ResourceRepository;
-import com.komici.challenge.rest.model.MobileResource;
+import com.komici.challenge.persistence.resource.MobileResourceEntity;
+import com.komici.challenge.persistence.resource.ResourceRepository;
+import com.komici.challenge.rest.model.resource.MobileResource;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

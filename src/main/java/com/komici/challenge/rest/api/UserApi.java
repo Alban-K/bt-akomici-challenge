@@ -1,6 +1,6 @@
 package com.komici.challenge.rest.api;
 
-import com.komici.challenge.rest.model.MobileResource;
+import com.komici.challenge.rest.model.resource.MobileResource;
 import com.komici.challenge.rest.model.user.AddUser;
 import com.komici.challenge.rest.model.user.UpdateUser;
 import com.komici.challenge.rest.model.user.UserListResponse;

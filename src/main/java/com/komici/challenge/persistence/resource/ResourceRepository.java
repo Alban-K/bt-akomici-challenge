@@ -1,4 +1,4 @@
-package com.komici.challenge.persistence;
+package com.komici.challenge.persistence.resource;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

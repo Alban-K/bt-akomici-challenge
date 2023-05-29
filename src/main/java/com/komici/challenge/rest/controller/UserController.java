@@ -5,7 +5,7 @@ import com.komici.challenge.rest.model.user.AddUser;
 import com.komici.challenge.rest.model.user.UpdateUser;
 import com.komici.challenge.rest.model.user.UserListResponse;
 import com.komici.challenge.rest.model.user.UserModel;
-import com.komici.challenge.service.UserService;
+import com.komici.challenge.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

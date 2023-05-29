@@ -1,6 +1,6 @@
 package com.komici.challenge.rest.api;
 
-import com.komici.challenge.rest.model.MobileResource;
+import com.komici.challenge.rest.model.resource.MobileResource;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

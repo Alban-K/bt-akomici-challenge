@@ -1,8 +1,8 @@
-package com.komici.challenge.service;
+package com.komici.challenge.service.user;
 
 import com.komici.challenge.exception.BTNoEntityFoundException;
-import com.komici.challenge.persistence.UserEntity;
-import com.komici.challenge.persistence.UserRepository;
+import com.komici.challenge.persistence.user.UserEntity;
+import com.komici.challenge.persistence.user.UserRepository;
 import com.komici.challenge.rest.model.user.AddUser;
 import com.komici.challenge.rest.model.user.UpdateUser;
 import com.komici.challenge.rest.model.user.UserListResponse;
@@ -61,8 +61,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel updateUser(UpdateUser updateUser) {
 
-        if (!userRepository.existsById(updateUser.getId()))
+        if (!userRepository.existsById(updateUser.getId())) {
             throw new BTNoEntityFoundException("The requested user does not exists");
+        }
 
         UserEntity userEntity = convertToEntity(updateUser);
         userEntity.setId(updateUser.getId());
@@ -75,8 +76,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long userId) {
 
-        if (!userRepository.existsById(userId))
+        if (!userRepository.existsById(userId)) {
             throw new BTNoEntityFoundException("The requested user does not exists");
+        }
 
         userRepository.deleteById(userId);
     }

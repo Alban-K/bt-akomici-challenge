@@ -1,4 +1,4 @@
-package com.komici.challenge.service;
+package com.komici.challenge.service.user;
 
 import com.komici.challenge.rest.model.user.AddUser;
 import com.komici.challenge.rest.model.user.UpdateUser;

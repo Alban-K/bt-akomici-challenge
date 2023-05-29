@@ -1,4 +1,4 @@
-package com.komici.challenge.rest.model;
+package com.komici.challenge.rest.model.resource;
 
 
 import java.io.Serializable;

@@ -1,9 +1,9 @@
 package com.komici.challenge.rest.controller;
 
-import com.komici.challenge.persistence.ResourceRepository;
+import com.komici.challenge.persistence.resource.ResourceRepository;
 import com.komici.challenge.rest.api.MobileResourceApi;
-import com.komici.challenge.rest.model.MobileResource;
-import com.komici.challenge.service.MobileResourceService;
+import com.komici.challenge.rest.model.resource.MobileResource;
+import com.komici.challenge.service.resource.MobileResourceService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
