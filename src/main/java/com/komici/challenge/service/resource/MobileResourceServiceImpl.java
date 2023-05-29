@@ -1,15 +1,16 @@
 package com.komici.challenge.service.resource;
 
 import com.komici.challenge.exception.BTNoEntityFoundException;
+import com.komici.challenge.exception.BTOperationNotAllowedException;
 import com.komici.challenge.persistence.resource.MobileResourceEntity;
 import com.komici.challenge.persistence.resource.ResourceRepository;
 import com.komici.challenge.persistence.user.UserEntity;
 import com.komici.challenge.persistence.user.UserRepository;
 import com.komici.challenge.rest.model.resource.*;
+import com.komici.challenge.rest.model.user.LiteUser;
 import com.komici.challenge.rest.model.user.UserModel;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,6 +101,11 @@ public class MobileResourceServiceImpl implements MobileResourceService {
         }
 
         MobileResourceEntity resourceEntity = resourceRepository.getReferenceById(resourceId);
+
+        if (resourceEntity.isBooked()) {
+            throw new BTOperationNotAllowedException("The requested resource is already booked");
+        }
+
         resourceEntity.setBookingDate(new Date());
         resourceEntity.setBooked(true);
         resourceEntity.setBookedBy(new UserEntity(userId));
@@ -137,7 +143,7 @@ public class MobileResourceServiceImpl implements MobileResourceService {
         bookingInfo.setBookingDate(resourceEntity.getBookingDate());
 
         if (resourceEntity.isBooked()) {
-            UserModel user = new UserModel();
+            LiteUser user = new LiteUser();
             UserEntity userEntity = resourceEntity.getBookedBy();
             //mapping only basic info such as user id, username and email
             user.setId(userEntity.getId());

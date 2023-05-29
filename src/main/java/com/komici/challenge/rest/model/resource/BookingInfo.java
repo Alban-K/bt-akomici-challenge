@@ -1,6 +1,7 @@
 package com.komici.challenge.rest.model.resource;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.komici.challenge.rest.model.user.LiteUser;
 import com.komici.challenge.rest.model.user.UserModel;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public class BookingInfo implements Serializable {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "UTC")
     private Date bookingDate;
-    private UserModel user;
+    private LiteUser user;
 
     public boolean isBooked() {
         return isBooked;
@@ -30,11 +31,11 @@ public class BookingInfo implements Serializable {
         this.bookingDate = bookingDate;
     }
 
-    public UserModel getUser() {
+    public LiteUser getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(LiteUser user) {
         this.user = user;
     }
 }

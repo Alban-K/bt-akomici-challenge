@@ -44,7 +44,7 @@ public interface MobileResourceApi {
     @ApiOperation(value = "", nickname = "bookResource", notes = "booking of a resource", response = MobileResourceModel.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Resource Booked", response = MobileResourceModel.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = ApiResponseError.class),
+            @ApiResponse(code = 409, message = "Bad Request", response = ApiResponseError.class),
             @ApiResponse(code = 404, message = "Not Found", response = ApiResponseError.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ApiResponseError.class)})
     MobileResourceModel bookResource(Long resourceId, Long userId);

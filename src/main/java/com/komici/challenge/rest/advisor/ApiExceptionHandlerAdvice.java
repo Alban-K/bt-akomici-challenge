@@ -3,6 +3,7 @@ package com.komici.challenge.rest.advisor;
 import com.google.common.base.Throwables;
 import com.komici.challenge.exception.BTNoEntityFoundException;
 
+import com.komici.challenge.exception.BTOperationNotAllowedException;
 import com.komici.challenge.rest.api.ApiResponseError;
 
 import org.slf4j.Logger;
@@ -30,12 +31,24 @@ public class ApiExceptionHandlerAdvice {
      * Handle exceptions thrown by handlers.
      */
     @ExceptionHandler(value = BTNoEntityFoundException.class)
-    public ResponseEntity<ApiResponseError> exception(BTNoEntityFoundException exception, WebRequest request) {
+    public ResponseEntity<ApiResponseError> exception(BTNoEntityFoundException exception) {
 
 
         logError(exception);
 
         return new ResponseEntity<>(new ApiResponseError(exception.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Handle exceptions thrown by handlers.
+     */
+    @ExceptionHandler(value = BTOperationNotAllowedException.class)
+    public ResponseEntity<ApiResponseError> exception(BTOperationNotAllowedException exception) {
+
+
+        logError(exception);
+
+        return new ResponseEntity<>(new ApiResponseError(exception.getMessage()), HttpStatus.CONFLICT);
     }
 
     /**
@@ -54,7 +67,7 @@ public class ApiExceptionHandlerAdvice {
      * Handle exceptions thrown by handlers.
      */
     @ExceptionHandler(value = DataIntegrityViolationException.class)
-    public ResponseEntity<ApiResponseError> exception(DataIntegrityViolationException exception, WebRequest request) {
+    public ResponseEntity<ApiResponseError> exception(DataIntegrityViolationException exception) {
 
 
         logError(exception);
