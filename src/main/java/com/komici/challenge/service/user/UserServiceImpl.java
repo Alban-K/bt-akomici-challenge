@@ -84,7 +84,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     private UserEntity convertToEntity(AddUser userModel) {
 
         UserEntity userEntity = new UserEntity();

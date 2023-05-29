@@ -2,10 +2,11 @@ package com.komici.challenge.persistence.user;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +28,10 @@ public class UserEntity {
     private boolean enable;
 
     public UserEntity() {
+    }
+
+    public UserEntity(Long userId) {
+        this.id = userId;
     }
 
     public long getId() {

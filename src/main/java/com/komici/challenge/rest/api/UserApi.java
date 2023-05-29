@@ -1,6 +1,6 @@
 package com.komici.challenge.rest.api;
 
-import com.komici.challenge.rest.model.resource.MobileResource;
+import com.komici.challenge.rest.model.resource.MobileResourceModel;
 import com.komici.challenge.rest.model.user.AddUser;
 import com.komici.challenge.rest.model.user.UpdateUser;
 import com.komici.challenge.rest.model.user.UserListResponse;
@@ -14,7 +14,7 @@ public interface UserApi {
 
     @ApiOperation(value = "", nickname = "user", notes = "get user resource info", response = UserModel.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Resource Read", response = MobileResource.class),
+            @ApiResponse(code = 200, message = "Resource Read", response = MobileResourceModel.class),
             @ApiResponse(code = 400, message = "Bad Request", response = ApiResponseError.class),
             @ApiResponse(code = 404, message = "Not Found", response = ApiResponseError.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ApiResponseError.class)})

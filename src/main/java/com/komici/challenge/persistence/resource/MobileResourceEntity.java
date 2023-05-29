@@ -1,11 +1,16 @@
 package com.komici.challenge.persistence.resource;
 
 
+import com.komici.challenge.persistence.user.UserEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
-import java.util.Objects;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class MobileResourceEntity {
+public class MobileResourceEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,14 +25,14 @@ public class MobileResourceEntity {
     @Column(name = "booked")
     private boolean booked;
 
-    public MobileResourceEntity() {
-    }
+    @Column(name = "bookingDate")
+    private Date bookingDate;
 
-    public MobileResourceEntity(String name, String description, boolean booked) {
-        this.name = name;
-        this.description = description;
-        this.booked = booked;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private UserEntity bookedBy;
+
+
 
     public long getId() {
         return id;
@@ -61,16 +66,19 @@ public class MobileResourceEntity {
         this.booked = booked;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MobileResourceEntity that = (MobileResourceEntity) o;
-        return id == that.id && booked == that.booked && name.equals(that.name) && description.equals(that.description);
+    public Date getBookingDate() {
+        return bookingDate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, booked);
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public UserEntity getBookedBy() {
+        return bookedBy;
+    }
+
+    public void setBookedBy(UserEntity bookedBy) {
+        this.bookedBy = bookedBy;
     }
 }

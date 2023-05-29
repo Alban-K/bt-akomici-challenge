@@ -8,6 +8,7 @@ import com.komici.challenge.rest.model.user.UserModel;
 public interface UserService {
 
     UserModel getUser(Long id);
+
     UserListResponse getAllUsers();
 
     UserModel saveUser(AddUser addUser);
