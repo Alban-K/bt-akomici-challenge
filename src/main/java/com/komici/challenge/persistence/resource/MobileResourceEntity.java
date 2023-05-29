@@ -32,7 +32,12 @@ public class MobileResourceEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity bookedBy;
 
+    public MobileResourceEntity(String mobileName) {
+        this.name = mobileName;
+    }
 
+    public MobileResourceEntity() {
+    }
 
     public long getId() {
         return id;

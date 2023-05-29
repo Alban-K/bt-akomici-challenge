@@ -23,7 +23,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api")
 public class MobileResourceController implements MobileResourceApi {
 
-    private Logger log = LoggerFactory.getLogger(MobileResourceController.class);
+    private final Logger log = LoggerFactory.getLogger(MobileResourceController.class);
 
     final MobileResourceService mobileResourceService;
 
