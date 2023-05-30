@@ -145,6 +145,7 @@ public class UserControllerITTest {
 
         testEmptyDefault();
     }
+
     @Test
     public void testGetExistingUser() {
 
@@ -175,6 +176,22 @@ public class UserControllerITTest {
         assertTrue(getResponseBody.isEnable());
 
         cleanUp(addResponseBody);
+
+        testEmptyDefault();
+    }
+
+    @Test
+    public void testGetNotExistingUser() {
+
+        HttpEntity<Void> getEntity = new HttpEntity<>(null, headers);
+
+        ResponseEntity<ApiResponseError> getResponse = restTemplate.exchange(
+                createURLWithPort("/api/user/" + 40223232L), HttpMethod.GET, getEntity, ApiResponseError.class);
+
+        ApiResponseError actualResponseError = getResponse.getBody();
+
+        assertNotNull(actualResponseError);
+        assertEquals("No entity found with id=40223232", actualResponseError.getErrorMsg());
 
         testEmptyDefault();
     }
@@ -387,6 +404,7 @@ public class UserControllerITTest {
         assertEquals(expectedSize, validationErrors.size());
         return validationErrors;
     }
+
     private void cleanUp(UserModel userModel) {
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
                 createURLWithPort("/api/user/delete/" + userModel.getId()),

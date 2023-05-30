@@ -15,4 +15,11 @@ public class UpdateMobileResource extends AddMobileResource implements Serializa
     this.id = id;
   }
 
+  public UpdateMobileResource(String name, Long id) {
+    super(name);
+    this.id = id;
+  }
+
+  public UpdateMobileResource() {
+  }
 }
