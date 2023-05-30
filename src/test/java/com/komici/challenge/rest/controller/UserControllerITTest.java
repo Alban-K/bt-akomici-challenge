@@ -22,12 +22,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SpringBootBTKomiciChallengeApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UserControllerIT {
+public class UserControllerITTest {
 
     @LocalServerPort
     private int port;
-    private TestRestTemplate restTemplate = new TestRestTemplate();
-    private HttpHeaders headers = new HttpHeaders();
+    private final TestRestTemplate restTemplate = new TestRestTemplate();
+    private final HttpHeaders headers = new HttpHeaders();
 
     @Test
     public void testEmptyDefault() {
