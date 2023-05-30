@@ -32,7 +32,7 @@ public class UserControllerITTest {
     @Test
     public void testEmptyDefault() {
 
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        HttpEntity<Void> entity = new HttpEntity<>(null, headers);
 
         ResponseEntity<UserListResponse> response = restTemplate.exchange(
                 createURLWithPort("/api/users"), HttpMethod.GET, entity, UserListResponse.class);
@@ -160,8 +160,10 @@ public class UserControllerITTest {
         assertEquals(HttpStatus.CREATED, addResponse.getStatusCode());
         assertNotNull(addResponseBody);
 
+        HttpEntity<Void> getEntity = new HttpEntity<>(null, headers);
+
         ResponseEntity<UserModel> getResponse = restTemplate.exchange(
-                createURLWithPort("/api/user/" + addResponseBody.getId()), HttpMethod.GET, entity, UserModel.class);
+                createURLWithPort("/api/user/" + addResponseBody.getId()), HttpMethod.GET, getEntity, UserModel.class);
 
         UserModel getResponseBody = getResponse.getBody();
 
