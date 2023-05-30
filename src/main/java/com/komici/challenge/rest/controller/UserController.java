@@ -59,7 +59,6 @@ public class UserController implements UserApi {
 
     @Override
     @PutMapping(value = "/user/update", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
     public UserModel updateUser(@RequestBody @NotNull @Valid UpdateUser updateUser) {
 
         log.info("updateUser {}", updateUser);

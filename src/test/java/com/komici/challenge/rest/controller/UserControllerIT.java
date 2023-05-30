@@ -3,6 +3,7 @@ package com.komici.challenge.rest.controller;
 import com.komici.challenge.SpringBootBTKomiciChallengeApplication;
 import com.komici.challenge.rest.api.ApiResponseError;
 import com.komici.challenge.rest.model.user.AddUser;
+import com.komici.challenge.rest.model.user.UpdateUser;
 import com.komici.challenge.rest.model.user.UserListResponse;
 import com.komici.challenge.rest.model.user.UserModel;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,7 +96,7 @@ class UserControllerIT {
 
         assertEquals(HttpStatus.BAD_REQUEST, responseForSameUser.getStatusCode());
         assertNotNull(responseForSameUserBody);
-        assertTrue(responseForSameUserBody.getErrorMsg().contains("Unique index or primary key violation:"));
+        assertTrue(responseForSameUserBody.getErrorMsg().startsWith("Unique index or primary key violation:"));
 
         cleanUp(userModel);
 
@@ -157,7 +159,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setUsername("");
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("username must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
@@ -168,7 +170,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setUsername(null);
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("username must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
@@ -179,7 +181,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setUsername("moreThanTwentyCharacterBecause12345677899434534534");
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("username size must be between 0 and 20", validationErrors.get(0));
 
         testEmptyDefault();
@@ -190,7 +192,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setEmail("");
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("email must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
@@ -201,8 +203,19 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setEmail(null);
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("email must not be blank", validationErrors.get(0));
+
+        testEmptyDefault();
+    }
+
+    @Test
+    public void testAddingBadUserRequestWithInvalidEmail() {
+
+        AddUser addUser = createAnUser(true);
+        addUser.setEmail("notAValidEmail");
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
+        assertEquals("email must be a well-formed email address", validationErrors.get(0));
 
         testEmptyDefault();
     }
@@ -213,7 +226,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setFirstname(null);
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("firstname must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
@@ -224,7 +237,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setFirstname("");
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("firstname must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
@@ -235,7 +248,7 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setSurname(null);
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("surname must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
@@ -246,16 +259,93 @@ class UserControllerIT {
 
         AddUser addUser = createAnUser(true);
         addUser.setSurname("");
-        List<String> validationErrors = validationErrorsForBadUserRequest(addUser);
+        List<String> validationErrors = validationErrorsForBadUserRequest(addUser, 1);
         assertEquals("surname must not be blank", validationErrors.get(0));
 
         testEmptyDefault();
     }
 
+    @Test
+    public void testAddingBadUserRequestWithMultipleErrors() {
 
-    //TODO test update
+        AddUser addUser = createAnUser(true);
+        addUser.setSurname("");
+        addUser.setUsername(null);
+        addUser.setEmail("notAValidEmail");
+        List<String> actualValidationErrors = validationErrorsForBadUserRequest(addUser, 3);
 
-    private List<String> validationErrorsForBadUserRequest(AddUser addUser) {
+        List<String> expectedValidationErrors = Arrays.asList("surname must not be blank",
+                "username must not be blank", "email must be a well-formed email address");
+
+        assertTrue(expectedValidationErrors.containsAll(actualValidationErrors));
+
+        testEmptyDefault();
+    }
+
+    @Test
+    public void testUpdateNotExistingUser() {
+
+        UpdateUser updateUser = createAnUpdateUser(404232412L);
+
+        HttpEntity<AddUser> entity = new HttpEntity<>(updateUser, headers);
+
+        ResponseEntity<ApiResponseError> response = restTemplate.exchange(
+                createURLWithPort("/api/user/update"), HttpMethod.PUT, entity, ApiResponseError.class);
+
+        ApiResponseError apiResponseError = response.getBody();
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(apiResponseError);
+
+        assertEquals("The requested user does not exists", apiResponseError.getErrorMsg());
+
+        testEmptyDefault();
+    }
+
+    @Test
+    public void testUpdateExistingUser() {
+
+        AddUser addUser = createAnUser(true);
+
+        HttpEntity<AddUser> addEntity = new HttpEntity<>(addUser, headers);
+
+        ResponseEntity<UserModel> response = restTemplate.exchange(
+                createURLWithPort("/api/user/add"), HttpMethod.POST, addEntity, UserModel.class);
+
+        UserModel actualAddUserModel = response.getBody();
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(actualAddUserModel);
+        assertTrue(actualAddUserModel.isEnable());
+
+        UpdateUser updateUser = createAnUpdateUser(actualAddUserModel.getId());
+        updateUser.setEmail("newChanged@email.com");
+        updateUser.setSurname("newSurname");
+        updateUser.setFirstname("newFirstname");
+
+        HttpEntity<AddUser> updateEntity = new HttpEntity<>(updateUser, headers);
+
+        ResponseEntity<UserModel> responseUpdate = restTemplate.exchange(
+                createURLWithPort("/api/user/update"), HttpMethod.PUT, updateEntity, UserModel.class);
+
+        UserModel actualUpdateUserModel = responseUpdate.getBody();
+
+        assertEquals(HttpStatus.OK, responseUpdate.getStatusCode());
+        assertNotNull(actualUpdateUserModel);
+
+        assertEquals(updateUser.getEmail(), actualUpdateUserModel.getEmail());
+        assertEquals(updateUser.getFirstname(), actualUpdateUserModel.getFirstname());
+        assertEquals(updateUser.getSurname(), actualUpdateUserModel.getSurname());
+        assertEquals(addUser.getUsername(), actualUpdateUserModel.getUsername());
+        assertTrue(actualUpdateUserModel.isEnable());
+
+        cleanUp(actualAddUserModel);
+
+        testEmptyDefault();
+    }
+
+
+    private List<String> validationErrorsForBadUserRequest(AddUser addUser, int expectedSize) {
         HttpEntity<AddUser> entity = new HttpEntity<>(addUser, headers);
 
 
@@ -268,7 +358,7 @@ class UserControllerIT {
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertNotNull(apiResponseError);
         List<String> validationErrors = apiResponseError.getValidationErrors();
-        assertEquals(1, validationErrors.size());
+        assertEquals(expectedSize, validationErrors.size());
         return validationErrors;
     }
     private void cleanUp(UserModel userModel) {
@@ -289,6 +379,17 @@ class UserControllerIT {
         addUser.setFirstname("Alban");
         addUser.setEnable(enable);
         return addUser;
+    }
+
+    private static UpdateUser createAnUpdateUser(long id) {
+        UpdateUser updateUser = new UpdateUser();
+        updateUser.setEmail("email@email.com");
+        updateUser.setUsername("akomici");
+        updateUser.setSurname("Komici");
+        updateUser.setFirstname("Alban");
+        updateUser.setEnable(true);
+        updateUser.setId(id);
+        return updateUser;
     }
 
     private String createURLWithPort(String uri) {
