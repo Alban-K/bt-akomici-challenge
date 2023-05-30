@@ -8,6 +8,12 @@ public class AddMobileResource implements Serializable {
     private String name;
     private String description;
 
+    public AddMobileResource(String name) {
+        this.name = name;
+    }
+    public AddMobileResource() {
+    }
+
 
     public String getName() {
         return name;

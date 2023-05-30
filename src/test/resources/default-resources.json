@@ -1,0 +1,94 @@
+{
+  "mobileResources": [
+    {
+      "name": "Samsung Galaxy S9",
+      "description": null,
+      "id": 1,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "2x Samsung Galaxy S8",
+      "description": null,
+      "id": 2,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "Motorola Nexus 6",
+      "description": null,
+      "id": 3,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "Oneplus 9",
+      "description": null,
+      "id": 4,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "Apple iPhone 13",
+      "description": null,
+      "id": 5,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "Apple iPhone 12",
+      "description": null,
+      "id": 6,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "Apple iPhone 11",
+      "description": null,
+      "id": 7,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "iPhone X",
+      "description": null,
+      "id": 8,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    },
+    {
+      "name": "Nokia 3310",
+      "description": null,
+      "id": 9,
+      "bookingInfo": {
+        "bookingDate": null,
+        "user": null,
+        "booked": false
+      }
+    }
+  ]
+}
