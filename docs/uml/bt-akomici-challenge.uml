@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/alban/Documents/work/windtre/git/personal/bt-akomici-challenge</OriginalElement>
+  <nodes>
+    <node x="763.0" y="554.0">com.komici.challenge.init.DBInitializer</node>
+    <node x="1135.75" y="466.0">com.komici.challenge.rest.api.UserApi</node>
+    <node x="-169.71428571428567" y="554.0">com.komici.challenge.rest.controller.MobileResourceController</node>
+    <node x="-179.0" y="890.0">com.komici.challenge.rest.advisor.ApiExceptionHandlerAdvice</node>
+    <node x="553.0" y="-77.0">com.komici.challenge.persistence.user.UserEntity</node>
+    <node x="278.0" y="466.0">com.komici.challenge.persistence.user.UserRepository</node>
+    <node x="118.0" y="998.0">com.komici.challenge.FileUtility</node>
+    <node x="872.0" y="890.0">com.komici.challenge.swagger.SwaggerDocumentationConfig</node>
+    <node x="-179.0" y="466.0">com.komici.challenge.rest.api.MobileResourceApi</node>
+    <node x="-179.0" y="686.0">MavenWrapperDownloader</node>
+    <node x="199.0" y="686.0">com.komici.challenge.rest.controller.MobileResourceControllerITTest</node>
+    <node x="0.0" y="108.0">com.komici.challenge.rest.model.resource.UpdateMobileResource</node>
+    <node x="601.7053571428571" y="466.0">com.komici.challenge.persistence.resource.ResourceRepository</node>
+    <node x="12.0" y="-65.0">com.komici.challenge.rest.model.resource.AddMobileResource</node>
+    <node x="270.0" y="323.0">com.komici.challenge.rest.model.user.UserListResponse</node>
+    <node x="534.0" y="686.0">com.komici.challenge.rest.controller.UserControllerITTest</node>
+    <node x="-174.0" y="-77.0">com.komici.challenge.rest.model.user.LiteUser</node>
+    <node x="-179.0" y="998.0">com.komici.challenge.exception.BTNoEntityFoundException</node>
+    <node x="298.5" y="-77.0">com.komici.challenge.rest.model.user.AddUser</node>
+    <node x="823.0" y="686.0">com.komici.challenge.rest.api.ApiResponseError</node>
+    <node x="-179.0" y="84.0">com.komici.challenge.rest.model.resource.BookingInfo</node>
+    <node x="34.0" y="466.0">com.komici.challenge.service.resource.MobileResourceService</node>
+    <node x="307.5" y="245.0">com.komici.challenge.rest.model.user.UserModel</node>
+    <node x="966.8303571428571" y="466.0">com.komici.challenge.service.user.UserService</node>
+    <node x="191.0" y="554.0">com.komici.challenge.service.resource.MobileResourceServiceImpl</node>
+    <node x="521.0" y="156.0">com.komici.challenge.persistence.resource.MobileResourceEntity</node>
+    <node x="-159.5" y="358.0">com.komici.challenge.rest.model.resource.MobileResourceListResponse</node>
+    <node x="-101.5" y="245.0">com.komici.challenge.rest.model.resource.MobileResourceModel</node>
+    <node x="1077.0" y="554.0">com.komici.challenge.rest.controller.UserController</node>
+    <node x="505.0" y="566.0">com.komici.challenge.service.user.UserServiceImpl</node>
+    <node x="123.0" y="890.0">com.komici.challenge.SpringBootBTKomiciChallengeApplication</node>
+    <node x="526.0" y="890.0">com.komici.challenge.exception.BTOperationNotAllowedException</node>
+    <node x="302.5" y="132.0">com.komici.challenge.rest.model.user.UpdateUser</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.komici.challenge.service.user.UserServiceImpl" target="com.komici.challenge.persistence.user.UserRepository" relationship="TO_ONE">
+      <point x="-59.5" y="-31.5" />
+      <point x="564.5" y="514.0" />
+      <point x="360.0" y="514.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.service.resource.MobileResourceServiceImpl" target="com.komici.challenge.persistence.user.UserRepository" relationship="TO_ONE">
+      <point x="73.5" y="-43.5" />
+      <point x="411.5" y="534.0" />
+      <point x="360.0" y="534.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.resource.MobileResourceModel" target="com.komici.challenge.rest.model.resource.UpdateMobileResource" relationship="GENERALIZATION">
+      <point x="54.0" y="-31.5" />
+      <point x="60.5" y="220.0" />
+      <point x="112.5" y="220.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.resource.UpdateMobileResource" target="com.komici.challenge.rest.model.resource.AddMobileResource" relationship="GENERALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="43.5" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.resource.MobileResourceModel" target="com.komici.challenge.rest.model.resource.BookingInfo" relationship="TO_ONE">
+      <point x="-54.0" y="-31.5" />
+      <point x="-47.5" y="220.0" />
+      <point x="-99.5" y="220.0" />
+      <point x="0.0" y="55.5" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.user.UserModel" target="com.komici.challenge.rest.model.user.UpdateUser" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.komici.challenge.persistence.resource.MobileResourceEntity" target="com.komici.challenge.persistence.user.UserEntity" relationship="TO_ONE">
+      <point x="0.0" y="-91.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="com.komici.challenge.rest.controller.MobileResourceController" target="com.komici.challenge.service.resource.MobileResourceService" relationship="TO_ONE">
+      <point x="84.5" y="-43.5" />
+      <point x="83.78571428571433" y="534.0" />
+      <point x="90.0" y="534.0" />
+      <point x="-56.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.controller.UserController" target="com.komici.challenge.rest.api.UserApi" relationship="REALIZATION">
+      <point x="49.5" y="-43.5" />
+      <point x="1225.5" y="534.0" />
+      <point x="1190.25" y="534.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.controller.MobileResourceController" target="com.komici.challenge.rest.api.MobileResourceApi" relationship="REALIZATION">
+      <point x="-84.5" y="-43.5" />
+      <point x="-85.21428571428567" y="534.0" />
+      <point x="-82.5" y="534.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.controller.UserController" target="com.komici.challenge.service.user.UserService" relationship="TO_ONE">
+      <point x="-49.5" y="-43.5" />
+      <point x="1126.5" y="534.0" />
+      <point x="1071.830357142857" y="534.0" />
+      <point x="35.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.resource.BookingInfo" target="com.komici.challenge.rest.model.user.LiteUser" relationship="TO_ONE">
+      <point x="0.0" y="-55.5" />
+      <point x="0.0" y="55.5" />
+    </edge>
+    <edge source="com.komici.challenge.service.user.UserServiceImpl" target="com.komici.challenge.service.user.UserService" relationship="REALIZATION">
+      <point x="59.5" y="-31.5" />
+      <point x="683.5" y="534.0" />
+      <point x="1001.8303571428571" y="534.0" />
+      <point x="-35.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.user.UpdateUser" target="com.komici.challenge.rest.model.user.AddUser" relationship="GENERALIZATION">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="com.komici.challenge.service.resource.MobileResourceServiceImpl" target="com.komici.challenge.persistence.resource.ResourceRepository" relationship="TO_ONE">
+      <point x="73.5" y="-43.5" />
+      <point x="411.5" y="534.0" />
+      <point x="360.0" y="534.0" />
+      <point x="360.0" y="524.0" />
+      <point x="701.2053571428571" y="524.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.service.resource.MobileResourceServiceImpl" target="com.komici.challenge.service.resource.MobileResourceService" relationship="REALIZATION">
+      <point x="-73.5" y="-43.5" />
+      <point x="264.5" y="534.0" />
+      <point x="202.0" y="534.0" />
+      <point x="56.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.init.DBInitializer" target="com.komici.challenge.persistence.resource.ResourceRepository" relationship="TO_ONE">
+      <point x="0.0" y="-43.5" />
+      <point x="910.0" y="514.0" />
+      <point x="701.2053571428571" y="514.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.user.UserListResponse" target="com.komici.challenge.rest.model.user.UserModel" relationship="TO_MANY">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.komici.challenge.rest.model.resource.MobileResourceListResponse" target="com.komici.challenge.rest.model.resource.MobileResourceModel" relationship="TO_MANY">
+      <point x="0.0" y="-31.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6328331862312445" showDependencies="true" x="558.0" y="635.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

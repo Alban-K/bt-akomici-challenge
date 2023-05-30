@@ -1,0 +1,134 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AddMobileResource {
+  - name: String
+  - description: String
+}
+class AddUser {
+  - surname: String
+  - email: String
+  - username: String
+  - firstname: String
+  - enable: boolean
+}
+class ApiExceptionHandlerAdvice {
+  - log: Logger
+}
+class ApiResponseError {
+  - errorMsg: String
+  - validationErrors: List<String>
+}
+class BTNoEntityFoundException
+class BTOperationNotAllowedException
+class BookingInfo {
+  - bookingDate: Date
+  - isBooked: boolean
+  - user: LiteUser
+}
+class DBInitializer {
+  - log: Logger
+  - resourceRepository: ResourceRepository
+}
+class FileUtility
+class LiteUser {
+  - email: String
+  - id: Long
+  - username: String
+}
+class MavenWrapperDownloader {
+  - MAVEN_WRAPPER_PROPERTIES_PATH: String
+  - WRAPPER_VERSION: String
+  - DEFAULT_DOWNLOAD_URL: String
+  - MAVEN_WRAPPER_JAR_PATH: String
+  - PROPERTY_NAME_WRAPPER_URL: String
+}
+interface MobileResourceApi << interface >>
+class MobileResourceController {
+  - log: Logger
+  ~ mobileResourceService: MobileResourceService
+}
+class MobileResourceControllerITTest {
+  - restTemplate: TestRestTemplate
+  - port: int
+  - headers: HttpHeaders
+}
+class MobileResourceEntity {
+  - description: String
+  - name: String
+  - bookingDate: Date
+  - bookedBy: UserEntity
+  - id: long
+  - booked: boolean
+}
+class MobileResourceListResponse {
+  ~ mobileResources: List<MobileResourceModel>
+}
+class MobileResourceModel {
+  - bookingInfo: BookingInfo
+}
+interface MobileResourceService << interface >>
+class MobileResourceServiceImpl {
+  - userRepository: UserRepository
+  - resourceRepository: ResourceRepository
+}
+interface ResourceRepository << interface >>
+class SpringBootBTKomiciChallengeApplication
+class SwaggerDocumentationConfig
+class UpdateMobileResource {
+  - id: Long
+}
+class UpdateUser {
+  - id: Long
+}
+interface UserApi << interface >>
+class UserController {
+  - userService: UserService
+  - log: Logger
+}
+class UserControllerITTest {
+  - restTemplate: TestRestTemplate
+  - port: int
+  - headers: HttpHeaders
+}
+class UserEntity {
+  - email: String
+  - enable: boolean
+  - id: long
+  - username: String
+  - surname: String
+  - name: String
+}
+class UserListResponse {
+  ~ userList: List<UserModel>
+}
+class UserModel
+interface UserRepository << interface >>
+interface UserService << interface >>
+class UserServiceImpl {
+  - userRepository: UserRepository
+}
+
+BookingInfo                            "1" *-[#595959,plain]-> "user\n1" LiteUser                               
+DBInitializer                          "1" *-[#595959,plain]-> "resourceRepository\n1" ResourceRepository                     
+MobileResourceController                -[#008200,dashed]-^  MobileResourceApi                      
+MobileResourceController               "1" *-[#595959,plain]-> "mobileResourceService\n1" MobileResourceService                  
+MobileResourceEntity                   "1" *-[#595959,plain]-> "bookedBy\n1" UserEntity                             
+MobileResourceListResponse             "1" *-[#595959,plain]-> "mobileResources\n*" MobileResourceModel                    
+MobileResourceModel                    "1" *-[#595959,plain]-> "bookingInfo\n1" BookingInfo                            
+MobileResourceModel                     -[#000082,plain]-^  UpdateMobileResource                   
+MobileResourceServiceImpl               -[#008200,dashed]-^  MobileResourceService                  
+MobileResourceServiceImpl              "1" *-[#595959,plain]-> "resourceRepository\n1" ResourceRepository                     
+MobileResourceServiceImpl              "1" *-[#595959,plain]-> "userRepository\n1" UserRepository                         
+UpdateMobileResource                    -[#000082,plain]-^  AddMobileResource                      
+UpdateUser                              -[#000082,plain]-^  AddUser                                
+UserController                          -[#008200,dashed]-^  UserApi                                
+UserController                         "1" *-[#595959,plain]-> "userService\n1" UserService                            
+UserListResponse                       "1" *-[#595959,plain]-> "userList\n*" UserModel                              
+UserModel                               -[#000082,plain]-^  UpdateUser                             
+UserServiceImpl                        "1" *-[#595959,plain]-> "userRepository\n1" UserRepository                         
+UserServiceImpl                         -[#008200,dashed]-^  UserService                            
+@enduml
