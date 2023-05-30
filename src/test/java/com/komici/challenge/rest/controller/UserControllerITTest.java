@@ -104,8 +104,33 @@ public class UserControllerITTest {
     }
 
     @Test
-    public void testDeletingNotExistingUser() throws Exception {
+    public void testDeletingExistingUser() {
 
+        AddUser addUser = createAnUser(true);
+
+        HttpEntity<AddUser> entity = new HttpEntity<>(addUser, headers);
+
+        ResponseEntity<UserModel> addResponse = restTemplate.exchange(
+                createURLWithPort("/api/user/add"), HttpMethod.POST, entity, UserModel.class);
+
+        UserModel actualAddedUserModel = addResponse.getBody();
+
+        assertEquals(HttpStatus.CREATED, addResponse.getStatusCode());
+        assertNotNull(actualAddedUserModel);
+
+
+        ResponseEntity<Void> deleteResponseEntity = restTemplate.exchange(
+                createURLWithPort("/api/user/delete/" + actualAddedUserModel.getId()),
+                HttpMethod.DELETE, entity, Void.class);
+
+        assertEquals(HttpStatus.OK, deleteResponseEntity.getStatusCode());
+        assertFalse(deleteResponseEntity.hasBody());
+
+        testEmptyDefault();
+    }
+
+    @Test
+    public void testDeletingNotExistingUser() {
 
         HttpEntity<Void> entity = new HttpEntity<>(null, headers);
 
@@ -120,7 +145,6 @@ public class UserControllerITTest {
 
         testEmptyDefault();
     }
-
     @Test
     public void testGetExistingUser() {
 
