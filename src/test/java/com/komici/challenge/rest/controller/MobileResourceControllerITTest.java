@@ -278,6 +278,78 @@ public class MobileResourceControllerITTest {
     }
 
     @Test
+    public void testBookingMobileResourceWithNotExistingMobile() throws Exception {
+        //GIVEN
+
+        AddUser addUser = createAnUser(true);
+
+        HttpEntity<AddUser> addedUserEntity = new HttpEntity<>(addUser, headers);
+
+        ResponseEntity<UserModel> addedUserResponseEntity = restTemplate.exchange(
+                createURLWithPort("/api/user/add"), HttpMethod.POST, addedUserEntity, UserModel.class);
+
+        UserModel actualAddedUserModel = addedUserResponseEntity.getBody();
+
+        assertEquals(HttpStatus.CREATED, addedUserResponseEntity.getStatusCode());
+        assertNotNull(actualAddedUserModel);
+
+        Date actualDateRequest = new Date();
+
+        //WHEN
+        ResponseEntity<ApiResponseError> apiResponseErrorResponseEntity = restTemplate.exchange(
+                createURLWithPort("/api/resource/book/" + 4047777 + "/user/" + actualAddedUserModel.getId()),
+                HttpMethod.PUT, null, ApiResponseError.class);
+
+        //THEN
+        ApiResponseError apiResponseError = apiResponseErrorResponseEntity.getBody();
+
+        assertEquals(HttpStatus.NOT_FOUND, apiResponseErrorResponseEntity.getStatusCode());
+        assertNotNull(apiResponseError);
+        assertEquals("The requested resource or user does not exists", apiResponseError.getErrorMsg());
+
+
+        cleanUpUser(actualAddedUserModel);
+
+        testAllDefault();
+    }
+
+    @Test
+    public void testBookingMobileResourceWithNotExistingUser() throws Exception {
+
+        //GIVEN
+        AddMobileResource addMobileResource = new AddMobileResource("aResourceMoBile");
+
+        HttpEntity<AddMobileResource> addedMobileEntity = new HttpEntity<>(addMobileResource, headers);
+
+        ResponseEntity<MobileResourceModel> addedMobileResponse = restTemplate.exchange(
+                createURLWithPort("/api/resource/add"), HttpMethod.POST, addedMobileEntity, MobileResourceModel.class);
+
+        MobileResourceModel actualAddedMobileResource = addedMobileResponse.getBody();
+
+        assertEquals(HttpStatus.CREATED, addedMobileResponse.getStatusCode());
+        assertNotNull(actualAddedMobileResource);
+
+
+        //WHEN
+        ResponseEntity<ApiResponseError> apiResponseErrorResponseEntity = restTemplate.exchange(
+                createURLWithPort("/api/resource/book/" + actualAddedMobileResource.getId() + "/user/" + 4048635),
+                HttpMethod.PUT, null, ApiResponseError.class);
+
+        //THEN
+
+        ApiResponseError apiResponseError = apiResponseErrorResponseEntity.getBody();
+
+        assertEquals(HttpStatus.NOT_FOUND, apiResponseErrorResponseEntity.getStatusCode());
+        assertNotNull(apiResponseError);
+        assertEquals("The requested resource or user does not exists", apiResponseError.getErrorMsg());
+
+
+        cleanUp(actualAddedMobileResource.getId());
+
+        testAllDefault();
+    }
+
+    @Test
     public void testAlreadyBookedMobileResource() throws Exception {
 
         //GIVEN
@@ -416,7 +488,7 @@ public class MobileResourceControllerITTest {
 
         ResponseEntity<MobileResourceModel> actualCheckoutEntity = restTemplate.exchange(
                 createURLWithPort("/api/resource/checkout/" + actualAddedMobileResource.getId()),
-                        HttpMethod.PUT, null, MobileResourceModel.class);
+                HttpMethod.PUT, null, MobileResourceModel.class);
 
         MobileResourceModel actualCheckoutResource = actualCheckoutEntity.getBody();
 
@@ -429,6 +501,42 @@ public class MobileResourceControllerITTest {
         assertNull(checkoutBookingInfo.getUser());
 
         cleanUp(actualAddedMobileResource, actualAddedUserModel);
+
+        testAllDefault();
+    }
+
+    @Test
+    public void testCheckoutNotExistingMobileResource() throws Exception {
+
+        //GIVEN
+
+        AddUser addUser = createAnUser(true);
+
+        HttpEntity<AddUser> addedUserEntity = new HttpEntity<>(addUser, headers);
+
+        ResponseEntity<UserModel> addedUserResponseEntity = restTemplate.exchange(
+                createURLWithPort("/api/user/add"), HttpMethod.POST, addedUserEntity, UserModel.class);
+
+        UserModel actualAddedUserModel = addedUserResponseEntity.getBody();
+
+        assertEquals(HttpStatus.CREATED, addedUserResponseEntity.getStatusCode());
+        assertNotNull(actualAddedUserModel);
+
+
+        //WHEN
+
+        ResponseEntity<ApiResponseError> actualCheckoutEntity = restTemplate.exchange(
+                createURLWithPort("/api/resource/checkout/" + 404131),
+                HttpMethod.PUT, null, ApiResponseError.class);
+
+        ApiResponseError apiResponseError = actualCheckoutEntity.getBody();
+
+        //THEN
+        assertEquals(HttpStatus.NOT_FOUND, actualCheckoutEntity.getStatusCode());
+        assertNotNull(apiResponseError);
+        assertEquals("The requested resource does not exists", apiResponseError.getErrorMsg());
+
+        cleanUpUser(actualAddedUserModel);
 
         testAllDefault();
     }
