@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.web.bind.annotation.PathVariable;
 
 public interface MobileResourceApi {
 
@@ -19,7 +18,7 @@ public interface MobileResourceApi {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ApiResponseError.class)})
     MobileResourceModel getMobileResource(Long id);
 
-    @ApiOperation(value = "", nickname = "saveUser", notes = "add new mobile resource ", response = MobileResourceModel.class)
+    @ApiOperation(value = "", nickname = "saveResource", notes = "add new mobile resource ", response = MobileResourceModel.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Resource created", response = MobileResourceModel.class),
             @ApiResponse(code = 400, message = "Bad Request", response = ApiResponseError.class),
@@ -34,7 +33,7 @@ public interface MobileResourceApi {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ApiResponseError.class)})
     MobileResourceModel updateMobileResource(@ApiParam(value = "User to be updated", required = true) UpdateMobileResource mobileResource);
 
-    @ApiOperation(value = "", nickname = "deleteUser", notes = "delete a resource")
+    @ApiOperation(value = "", nickname = "deleteResource", notes = "delete a resource")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Resource delete"),
             @ApiResponse(code = 400, message = "Bad Request", response = ApiResponseError.class),

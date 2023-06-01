@@ -25,7 +25,7 @@ public class MobileResourceController implements MobileResourceApi {
 
     private final Logger log = LoggerFactory.getLogger(MobileResourceController.class);
 
-    final MobileResourceService mobileResourceService;
+    private final MobileResourceService mobileResourceService;
 
     public MobileResourceController(MobileResourceService mobileResourceService) {
         this.mobileResourceService = mobileResourceService;
@@ -86,7 +86,7 @@ public class MobileResourceController implements MobileResourceApi {
     }
 
     @Override
-    @PutMapping(value = "/resource/checkout/{resourceId}")
+    @PutMapping(value = "/resource/checkout/{resourceId}", produces = APPLICATION_JSON_VALUE)
     public MobileResourceModel checkoutResource(@PathVariable Long resourceId) {
 
         log.info("checkoutResource with id={}", resourceId);

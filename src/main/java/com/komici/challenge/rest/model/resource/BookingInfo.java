@@ -2,7 +2,6 @@ package com.komici.challenge.rest.model.resource;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.komici.challenge.rest.model.user.LiteUser;
-import com.komici.challenge.rest.model.user.UserModel;
 
 import java.io.Serializable;
 import java.util.Date;

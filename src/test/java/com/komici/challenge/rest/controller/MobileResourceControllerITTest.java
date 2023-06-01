@@ -20,6 +20,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SpringBootBTKomiciChallengeApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MobileResourceControllerITTest {
+
+    private static final String EXPECTED_DEFAULT_MOBILES_AS_JSON_STRING = FileUtility.readFileAsString("default-resources.json");
 
     @LocalServerPort
     private int port;
@@ -44,16 +47,15 @@ public class MobileResourceControllerITTest {
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/api/resources"), HttpMethod.GET, entity, String.class);
 
-        String expected = FileUtility.readFileAsString("default-resources.json");
         String body = response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(expected, body, false);
+        JSONAssert.assertEquals(EXPECTED_DEFAULT_MOBILES_AS_JSON_STRING, body, false);
     }
 
 
     @Test
-    public void testAddingNewMobileResourceDefault() throws Exception {
+    public void testAddingNewMobileResource() throws Exception {
 
         HttpEntity<AddMobileResource> entity = new HttpEntity<>(new AddMobileResource("New Mobile"), headers);
 
@@ -68,6 +70,41 @@ public class MobileResourceControllerITTest {
         assertFalse(mobileResourceModel.getBookingInfo().isBooked());
 
         cleanUp(mobileResourceModel.getId());
+
+        testAllDefault();
+    }
+
+    @Test
+    public void testAddingMobileWithEmptyName() throws Exception {
+
+        AddMobileResource addMobileResource = new AddMobileResource("");
+
+        List<String> validationErrors = validationErrorsForBadUserRequest(addMobileResource, 1);
+        assertEquals("name must not be blank", validationErrors.get(0));
+
+        testAllDefault();
+    }
+
+    @Test
+    public void testAddingMobileWithNullName() throws Exception {
+
+        AddMobileResource addMobileResource = new AddMobileResource(null);
+
+        List<String> validationErrors = validationErrorsForBadUserRequest(addMobileResource, 1);
+        assertEquals("name must not be blank", validationErrors.get(0));
+
+        testAllDefault();
+    }
+
+
+    @Test
+    public void testAddingMobileWithLongName() throws Exception {
+
+        AddMobileResource addMobileResource = new AddMobileResource(
+                "MoreThan40CharsMoreThan40CharsMoreThan40CharsMoreThan40Chars");
+
+        List<String> validationErrors = validationErrorsForBadUserRequest(addMobileResource, 1);
+        assertEquals("name size must be between 0 and 40", validationErrors.get(0));
 
         testAllDefault();
     }
@@ -566,6 +603,22 @@ public class MobileResourceControllerITTest {
         assertFalse(deleteResponse.hasBody());
     }
 
+    private List<String> validationErrorsForBadUserRequest(AddMobileResource addMobileResource, int expectedSize) {
+        HttpEntity<AddMobileResource> entity = new HttpEntity<>(addMobileResource, headers);
+
+
+        ResponseEntity<ApiResponseError> responseEntity = restTemplate.exchange(
+                createURLWithPort("/api/resource/add"), HttpMethod.POST, entity, ApiResponseError.class);
+
+
+        ApiResponseError apiResponseError = responseEntity.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertNotNull(apiResponseError);
+        List<String> validationErrors = apiResponseError.getValidationErrors();
+        assertEquals(expectedSize, validationErrors.size());
+        return validationErrors;
+    }
 
     private static AddUser createAnUser(boolean enable) {
         AddUser addUser = new AddUser();

@@ -2,7 +2,7 @@
 
 ## Architecture
 
-As the response for the [test/challenge](docs/BT_Backend_Test_Java_GG_v3.pdf),
+As the response for the ~~[test/challenge](docs/BT_Backend_Test_Java_GG_v3.pdf)~~,
 the proposed delivery is a Spring Boot application using in memory database for the persistence.
 The project is a structured as a maven project.
 
@@ -34,7 +34,13 @@ spring.profiles.active=test-h2-db
 
 ## UML diagrams
 
-The UML diagrams can be found in [docs/iml](docs/uml) , where the desired format can be chosen.
+The UML diagrams can be found in [docs/uml](docs/uml) , where the desired format can be chosen.
+
+## Known limitations 
+The main known limitation of the application are 
+
+1. Security : everyone that have access to the application can do everything ( through the REST APIs calls)
+2. No pagination ( the returned list of resources , such us users or mobiles are not paginated )
 
 ## Run Spring Boot application
 
