@@ -37,7 +37,8 @@ spring.profiles.active=test-h2-db
 The UML diagrams can be found in [docs/uml](docs/uml) , where the desired format can be chosen.
 
 ## Known limitations 
-The main known limitation of the application are 
+<br>
+The main known limitations of the application are 
 
 1. Security : everyone that have access to the application can do everything ( through the REST APIs calls)
 2. No pagination ( the returned list of resources , such us users or mobiles are not paginated )
